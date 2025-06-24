@@ -118,3 +118,20 @@ Non, la base ne doit pas être exposée directement. On passe par une API REST p
 **6. Peut-on facilement sauvegarder/exporter les données ? Et les restaurer ?**
 
 Oui 
+
+**7. Est-ce que l’ajout d’une BDD rend le service plus rapide ? Plus lent ?**
+
+Au départ un peu plus lent, car on ajoute une couche
+Mais au global plus rapide car on évite de recontacter une API lente à chaque fois
+
+**8. Que se passe-t-il si plusieurs clients envoient des requêtes simultanément ?**
+
+Grâce à la BDD, les requêtes peuvent être gérées en parallèle sans conflit. Contrairement à un fichier, pas de risque d'accès concurrent mal géré
+
+**9. Peut-on mettre à jour une donnée météo sans recontacter l’API externe ?**
+
+Oui, il suffit de modifier directement l’entrée en base si on connaît les nouvelles valuers
+
+**10. Est-ce qu’on peut interroger la météo d’hier ou de demain avec cette architecture ?**
+
+Non, pas sans modification. L’API actuelle ne fournit que la météo actuelle, et la base ne stocke qu’un instant T. Il faudrait ajouter des horodatages multiples et un paramètre de date
