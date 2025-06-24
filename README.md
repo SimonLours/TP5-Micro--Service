@@ -101,3 +101,20 @@ Cela permet d’éviter les appels redondants à l’API externe, en cachant les
 **2. Est-ce que chaque microservice devrait avoir sa propre base, ou peut-on les partager ?**
 
 En architecture microservices, chaque service doit avoir sa propre base de données. Cela garantit l’indépendance et l’encapsulation des services. Partager une base casse ce principe et introduit du couplage
+
+**3. Que gagne-t-on (et que perd-on) en utilisant une base relationnelle plutôt qu’un fichier ou un dictionnaire Python ?**
+
+On gagne en structure, recherche rapide, concurrence maîtrisée, et persistance fiable.
+On perd un peu en simplicité et performance brute pour des petits volumes
+
+**4. Que permet une base comme MySQL que ne permet pas un fichier JSON ?**
+
+MySQL permet des requêtes complexes (filtres, tris), accès simultanés sûrs, transactions, indexation, intégrité des données, et sauvegarde/restauration fiablee
+
+**5. Si on voulait partager cette météo avec d’autres services, la base est-elle une bonne interface ?**
+
+Non, la base ne doit pas être exposée directement. On passe par une API REST pour interagir avec elle, ce qui permet de contrôler l’accès, le format, la sécurité, etc......
+
+**6. Peut-on facilement sauvegarder/exporter les données ? Et les restaurer ?**
+
+Oui 
