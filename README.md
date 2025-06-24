@@ -25,3 +25,23 @@
 5. Avez-vous déjà vu ou utilisé un site ou une appli qui semblait "modulaire" ?
 
     Par exemple : Amazon ouNetflix où chaque fonctionnalité (paiement, catalogue, suggestions,...) semble être un module à part
+
+
+   
+### Comment découper un service ?
+
+6. Sur quels critères peut-on séparer un gros service en plusieurs petits ?
+
+   Par fonctionnalité (par exemple : blagues, météo, ...), par type de données manipulées, ou par responsabilités métiers distinctes
+   
+7. Faut-il découper par fonctionnalité (ex : blague, météo, ...) ? Par type de donnée ? Par public cible ?
+
+   Il est généralement préférable de découper par fonctionnalité. Chaque microservice doit gérer une seule responsabilité claire. Mais les autres critères peuvent aussi être pertinents selon le contexte.
+   
+8. À partir de combien de lignes de code ou de routes HTTP faut-il envisager un découpage ?
+
+     Il n’y a pas de règle fixe, mais si le code devient difficile à maintenir, tester ou comprendre, ou si le service a trop de routes HTTP, c’est un bon indicateur pour envisager un découpage.
+    
+9. Le découpage doit-il être figé ou peut-il évoluer ?
+
+    Il doit pouvoir évoluer. L’architecture logicielle est vivante : les besoins changent, et l’organisation du code doit pouvoir s'adapter sans tout réécreire
