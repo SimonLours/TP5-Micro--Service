@@ -48,7 +48,8 @@
 
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 # Météo.pdf
 
@@ -89,7 +90,7 @@ Traduction automatique des conditions météo
 Ajout des prévisions (pas juste la météo actuelle) sur 24h ou 7 jours
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Persistance-orm.pdf
 
@@ -135,3 +136,26 @@ Oui, il suffit de modifier directement l’entrée en base si on connaît les no
 **10. Est-ce qu’on peut interroger la météo d’hier ou de demain avec cette architecture ?**
 
 Non, pas sans modification. L’API actuelle ne fournit que la météo actuelle, et la base ne stocke qu’un instant T. Il faudrait ajouter des horodatages multiples et un paramètre de date
+
+
+### Question de rélfexion
+
+**1. Pourquoi voudrait-on éviter d’écrire directement des requêtes SQL à la main ?**
+
+Franchement, écrire du SQL à la main, c’est vite long, surtout quand on débute. On peut faire des erreurs facilement, comme des oublis de jointures ou des injections SQL si on ne fait pas gaffe. Utiliser un ORM, ça permet de gagner du temps, d’avoir moins de code répétitif, et c’est plus naturel quand on vient du monde objet comme Python. Donc pour éviter le SQL brut, surtout pour des tâches simples, c’est clairement un confort
+
+**2. Que gagne-t-on en utilisant un ORM comme SQLAlchemy ?**
+
+On gagne beaucoup en lisibilité et en maintenance. On peut créer, lire ou modifier des enregistrements sans jamais penser aux requêtes SQL exactes. C’est un gros avantage pour travailler en équipe avec des gens qui ne sont pas à l’aise avec SQL. Et le fait que ça s’intègre bien avec Flask
+
+**3. Est-ce que l’ORM vous empêche complètement d’accéder au SQL si besoin ?**
+
+Non, on peut utiliser les fonctions haut niveau, mais aussi injecter du SQL brut quand on a des besoins spécifiques ou quand c’est plus performant
+
+**4. Est-ce que le code Python devient plus clair ou plus opaque avec un ORM ?**
+
+Je dirais que le code devient plus clair au début, surtout pour les opérations simples. Mais dès qu’on fait des choses un peu complexes (relations entre tables, jointures, etc...), l’abstraction peut cacher des choses importantes, et du coup, faut connaître un minimum ce qui se passe derrière. Donc c’est clair si on comprend bien l’outil, sinon ça peut devenir un peu opaque.
+
+**5. À quel moment l’ORM peut devenir un inconvénient ?**
+
+Pour nous, l’ORM peut poser problème quand on a des besoins très spécifiques en performance, genre des requêtes ultra optimisées ou des traitements de masse. Là, l’ORM peut générer du SQL pas optimal, et c’est mieux de reprendre la main
