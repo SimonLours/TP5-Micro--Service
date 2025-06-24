@@ -51,3 +51,45 @@
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Météo.pdf
+
+
+**1. Pourquoi ne pas appeler directement open-meteo depuis le navigateur ?**
+
+Sécurité : les appels directs du navigateur exposent la clé API (s’il y en avait une), ce qui peut poser des risques d’abus ou de piratage
+
+Abstraction : cela permet de masquer la complexité de l’API externe et de fournir une interface plus simple aux utilisateurs internes.
+
+Contrôle : cela permet de filtrer ou formater les données avant qu’elles ne soient utilisées
+
+**2. Quel est l’avantage de passer par un microservice intermédiaire ?**
+
+tout passe par un point unique, plus facile à maintenir. Simplification des appels pour les autres services ou développeurs (moins de paramètres, format unifié).
+Possibilité d’ajouter du cache, des statistiques,...
+
+**3. Si le format de réponse de open-meteo change, que se passe-t-il ?**
+
+Si on appelle directement l’API depuis le front, tout casse 
+Mais avec un microservice intermédiaire, on peut :
+
+Adapter rapidement la structure du code backend,
+
+Préserver l’interface fournie aux consommateurs
+
+Cela isole les impacts du changement de format.
+
+**4. Que pourrait-on ajouter pour rendre ce service plus complet ou plus
+robuste ?**
+
+Persistance des requêtes récentes (cache temporaire pour éviter les appels répétés)
+
+Ajout d’une clé API personnelle pour accéder au service (gestion des droits d’accès)
+
+Traduction automatique des conditions météo
+
+Ajout des prévisions (pas juste la météo actuelle) sur 24h ou 7 jours
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Persistance-orm.pdf
+
