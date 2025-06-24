@@ -138,7 +138,7 @@ Oui, il suffit de modifier directement l’entrée en base si on connaît les no
 Non, pas sans modification. L’API actuelle ne fournit que la météo actuelle, et la base ne stocke qu’un instant T. Il faudrait ajouter des horodatages multiples et un paramètre de date
 
 
-### Question de rélfexion
+### __Question de réflexion__
 
 **1. Pourquoi voudrait-on éviter d’écrire directement des requêtes SQL à la main ?**
 
