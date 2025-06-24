@@ -93,3 +93,11 @@ Ajout des prévisions (pas juste la météo actuelle) sur 24h ou 7 jours
 
 # Persistance-orm.pdf
 
+
+**1. Pourquoi ajouter une base de données à un service météo aussi simple ? Est-ce justifié ?**
+
+Cela permet d’éviter les appels redondants à l’API externe, en cachant les données. Même si le service est simple, ça améliore les performances, évite les bannissements, et illustre un usage typique d’architecture moderne
+
+**2. Est-ce que chaque microservice devrait avoir sa propre base, ou peut-on les partager ?**
+
+En architecture microservices, chaque service doit avoir sa propre base de données. Cela garantit l’indépendance et l’encapsulation des services. Partager une base casse ce principe et introduit du couplage
