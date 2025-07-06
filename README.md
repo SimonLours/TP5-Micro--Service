@@ -159,3 +159,69 @@ Je dirais que le code devient plus clair au début, surtout pour les opérations
 **5. À quel moment l’ORM peut devenir un inconvénient ?**
 
 Pour nous, l’ORM peut poser problème quand on a des besoins très spécifiques en performance, genre des requêtes ultra optimisées ou des traitements de masse. Là, l’ORM peut générer du SQL pas optimal, et c’est mieux de reprendre la main
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# agrégation.pdf
+
+
+1. Ce service fait deux appels HTTP internes. Est-ce efficace ? Pourquoi ?
+   
+C’est efficace d’un point de vue modularité, car chaque microservice reste indépendant. Mais au niveau performances, faire deux appels HTTP successifs ajoute une petite latence. 
+
+2. Que se passe-t-il si l’un des deux services répond avec une erreur ou met trop de temps ?
+   
+Sans gestion d’erreur, ça échouera. Il faut donc ajouter des timeouts et des blocs try/except pour renvoyer un message d’erreur clair
+
+3. Peut-on réutiliser ce service dans d’autres cas (email, impression, vocal) ?
+   
+Oui, l’agrégateur peut servir d’un point d’entrée commun dans plein de cas. Par exemple pour formater une réponse vocale, un PDF à imprimer ou un email
+
+4. Quelle est la différence entre un service “client” (ex : navigateur) et ce nouveau service ?
+   
+Le service client consomme les données pour les afficher ou interagir avec l'utilisateur.
+Le service agrégateur, lui, est intermédiaire. il appelle d'autres services, fusionne les données, et les renvoie au client
+
+
+
+
+1. Quelles sont les principales différences entre la configuration manuelle d’un nginx.conf et l’approche déclarative de Traefik ?
+   
+Nginx nécessite une configuration manuelle, souvent longue et verbeuse.
+Traefik, lui, utilise des labels Docker et détecte dynamiquement les services. Il n’y a pas besoin d’éditer un fichier de conf, c’est plus rapide et automatisé.
+
+2. Dans quel type de projet Caddy pourrait-il être plus avantageux que Traefik ?
+   
+Caddy est très pratique pour des petits projets ou protos qui nécessitent du HTTPS sans prise de tête. Il génère automatiquement les certificats, donc pour un site vitrine, un petit dashboard ou une démo rapide, c’est un bon choix.
+
+3. Que se passe-t-il si un service change de nom ou de port dans votre environnement Docker ? Lequel de ces outils gère cela automatiquement ?
+   
+Traefik le gère automatiquement grâce à l’inspection des conteneurs via Docker.
+Nginx nécessiterait de modifier manuellement la config, puis de recharger le serveur.
+
+4. Lequel de ces outils vous semble le plus adapté à un usage en production ? Pourquoi ?
+   
+Traefik est parfait pour une stack Dockerisée dynamique en production.
+Mais Nginx reste un choix très stable pour des applications critiques, surtout si on a besoin d’un contrôle fin. Donc je dirais :
+
+Traefik → si automatisation, scaling et DevOps moderne.
+
+Nginx → si priorité à la stabilité, performance fine, ou si infra plus classique.
+
+5. Comment chacun de ces reverse proxies gère-t-il la génération et le renouvellement des certificats SSL ?
+   
+Traefik et Caddy peuvent automatiser ça avec Let’s Encrypt.
+
+Caddy le fait en un seul fichier simple, idéal pour débuter.
+
+Traefik le fait via ses options de configuration.
+Nginx, en revanche, nécessite une config externe ou un cron job avec certbot (plus manuel).
+
+6. Est-il raisonnable d’exposer le docker.sock à un reverse proxy ? Quels avantages cela apporte-t-il ? Quels risques cela peut-il poser ?
+   
+C’est très puissant, car Traefik peut ainsi lire dynamiquement les services, mais aussi très risqué : si quelqu’un prend le contrôle du reverse proxy, il peut contrôler tous les conteneurs. Donc à n’utiliser que dans un environnement de confiance, avec les bons droits limités.
+
+7. Pourriez-vous imaginer un scénario où l’on utiliserait Traefik pour les services internes et Nginx pour l’exposition publique ? Pourquoi (ou pourquoi pas) ?
+   
+Oui, c’est tout à fait logique. Traefik gère la dynamique interne, redirige les services automatiquement. Et Nginx agit comme une barrière externe, avec des règles précises, une gestion de cache ou de load balancing plus custom. C’est un bon combo sécurité + souplesse.
